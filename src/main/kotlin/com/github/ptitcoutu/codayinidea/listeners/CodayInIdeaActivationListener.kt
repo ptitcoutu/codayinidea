@@ -1,0 +1,5 @@
+package com.github.ptitcoutu.codayinidea.listeners
+
+import com.intellij.openapi.application.ApplicationActivationListener
+
+internal class CodayInIdeaActivationListener : ApplicationActivationListener
