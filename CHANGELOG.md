@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2024-11-14
+add support of IntelliJ Idea 2024.3
+
 ## [1.0.1] - 2024-11-11
 fix declared version issue
 
