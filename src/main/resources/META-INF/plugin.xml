@@ -3,7 +3,14 @@
     <id>com.github.ptitcoutu.codayinidea</id>
     <name>codayinid</name>
     <vendor>ptitcoutu</vendor>
+    <description><![CDATA[
+Provides integration of Coday AI Agent (https://gitlab.com/biznet.io/coday) in IntelliJ Idea.
+A window tool allow to interact with coday which orchestrates AI agents through a simple chat.
+Coday, with the help of genAI, interacts with your code, Git, Jira or Gitlab to achieve tasks you ask him.
+With this plugin you can ask to coday from IntelliJ to refactor your code according to information from merge request in GitLab and Jira ticket.
 
+For more information visit the <a href="https://gitlab.com/biznet.io/coday">Coday Repository</a>.
+]]></description>
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.CodayInIdeaBundle</resource-bundle>
