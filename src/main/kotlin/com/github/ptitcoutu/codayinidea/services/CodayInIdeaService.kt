@@ -6,10 +6,11 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 
 @Service(Service.Level.PROJECT)
-class CodayInIdeaService(project: Project, val codayProcessMediator: CodayProcessMediator) {
-
+class CodayInIdeaService(project: Project) {
+    val codayProcessMediator: CodayProcessMediator
     init {
         thisLogger().info(CodayInIdeaBundle.message("projectService", project.name))
+        codayProcessMediator = project.getService(CodayProcessMediator::class.java)
     }
 
     fun checkIfCodayIsRunning() {
