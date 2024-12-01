@@ -4,6 +4,7 @@ import com.github.ptitcoutu.codayinidea.services.CodayInIdeaService
 import com.github.ptitcoutu.codayinidea.services.CodayProcessMediator
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
+import com.intellij.testFramework.registerServiceInstance
 import junit.framework.TestCase
 
 class CodayInIdeaTest : BasePlatformTestCase() {
@@ -26,7 +27,8 @@ class CodayInIdeaTest : BasePlatformTestCase() {
 
 
         // When checkIfCodayIsRunning is called
-        val projectService = CodayInIdeaService(project, mockedCodayProcessMediator)
+        project.actualComponentManager.registerServiceInstance(CodayProcessMediator::class.java, mockedCodayProcessMediator)
+        val projectService = CodayInIdeaService(project)
         projectService.checkIfCodayIsRunning()
 
         // Then startCodayService is called
