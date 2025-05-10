@@ -6,8 +6,10 @@ import java.io.File
 
 @Service(Service.Level.PROJECT)
 open class CodayProcessMediator(val project: Project) {
+    val codayUrl =  CodaySettings.getInstance(project).getCodayUrl()
     open fun checkCodayIsRunning(): Boolean {
-        val process = Runtime.getRuntime().exec(arrayOf("curl", "http://localhost:3000"))
+
+        val process = Runtime.getRuntime().exec(arrayOf("curl", codayUrl))
         val exitCode = process.waitFor()
 
         return if (exitCode == 0) {
@@ -22,16 +24,19 @@ open class CodayProcessMediator(val project: Project) {
 
     open fun startCodayService() {
         try {
+            val codayPath = CodaySettings.getInstance(project).getCodayPath()
+            val expandedPath = codayPath.replace("~", System.getProperty("user.home"))
+            
             val resInit = executeCommand(
                 "bash",
                 "-c",
-                "cd ~/Workspace/biznet.io/app/coday; git pull --ff-only; yarn install --frozen-lock-file"
+                "cd $expandedPath; git pull --ff-only; yarn install --frozen-lock-file"
             )
             println("yarn install output: $resInit")
             val resCodayWeb = executeCommand(
                 "bash",
                 "-c",
-                "cd ~/Workspace/biznet.io/app/coday; nohup yarn web",
+                "cd $expandedPath; nohup yarn web",
                 waitCommandTermination = false
             )
             println("coday web output: $resCodayWeb")
@@ -44,6 +49,7 @@ open class CodayProcessMediator(val project: Project) {
             e.printStackTrace()
         }
     }
+    
     private fun executeCommand(vararg command: String, waitCommandTermination: Boolean = true): String {
         val processBuilder = ProcessBuilder(*command)
         processBuilder.redirectErrorStream(true)
@@ -57,7 +63,9 @@ open class CodayProcessMediator(val project: Project) {
             process.inputStream.bufferedReader().readText()
         } else {
             Thread.sleep(200)
-            File("/Users/vincent.couturier/Workspace/biznet.io/app/coday/nohup.out").readText()
+            val codayPath = CodaySettings.getInstance(project).getCodayPath()
+            val expandedPath = codayPath.replace("~", System.getProperty("user.home"))
+            File("$expandedPath/nohup.out").readText()
         }
     }
 }

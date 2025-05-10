@@ -25,7 +25,7 @@ class CodayInIdeaWindowFactory : ToolWindowFactory {
 
         private val webView: JBCefBrowser by lazy {
             service.checkIfCodayIsRunning()
-            JBCefBrowser("http://localhost:3000").also { browser ->
+            JBCefBrowser(service.codayProcessMediator.codayUrl).also { browser ->
                 Disposer.register(project, browser)
             }
         }
